@@ -3385,20 +3385,39 @@ void C_BaseAnimating::ProcessMuzzleFlashEvent()
 		//FIXME: We should really use a named attachment for this
 		if ( m_Attachments.Count() > 0 )
 		{
-			Vector vAttachment;
-			QAngle dummyAngles;
-			GetAttachment( 1, vAttachment, dummyAngles );
+			Vector vAttachment, vAng;
+			QAngle angles;
+			GetAttachment(1, vAttachment, angles); // Use attachment point
 
-			// Make an elight
-			dlight_t *el = effects->CL_AllocElight( LIGHT_INDEX_MUZZLEFLASH + index );
-			el->origin = vAttachment;
-			el->radius = random->RandomInt( 32, 64 ); 
-			el->decay = el->radius / 0.05f;
-			el->die = gpGlobals->curtime + 0.05f;
-			el->color.r = 255;
-			el->color.g = 192;
-			el->color.b = 64;
-			el->color.exponent = 5;
+			AngleVectors(angles, &vAng);
+			vAttachment += vAng * 2;
+
+			// Create the projected texture
+			CProjectedTexture* pProjectedTexture = new CProjectedTexture();
+
+			// Configure the projected texture
+			pProjectedTexture->SetOrigin(vAttachment);
+			pProjectedTexture->SetAngles(angles);
+
+			// Set the FOV to 270 degrees for a wide flash effect
+			pProjectedTexture->SetFOV(270.0f);
+
+			// Assign a custom muzzle flash texture
+			pProjectedTexture->SetTexture("effects/muzzleflash_projected");
+
+			// Enable shadows for realism
+			pProjectedTexture->SetShadow(true);
+
+			// Set brightness and light color
+			pProjectedTexture->SetBrightness(3.0f); // Adjust for desired intensity
+			pProjectedTexture->SetColor(252, 238, 128);
+
+			// Set near and far Z range
+			pProjectedTexture->SetNearZ(4.0f);
+			pProjectedTexture->SetFarZ(512.0f);
+
+			// Turn the light on
+			pProjectedTexture->Update();
 		}
 	}
 }

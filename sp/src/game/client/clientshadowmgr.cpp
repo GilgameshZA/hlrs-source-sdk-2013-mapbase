@@ -113,9 +113,9 @@ ConVar r_flashlightdepthtexture( "r_flashlightdepthtexture", "1" );
 ConVar r_flashlightdepthres( "r_flashlightdepthres", "512" );
 #else
 #ifdef MAPBASE
-ConVar r_flashlightdepthres( "r_flashlightdepthres", "2048" );
+ConVar r_flashlightdepthres( "r_flashlightdepthres", "4096" );
 #else
-ConVar r_flashlightdepthres( "r_flashlightdepthres", "1024" );
+ConVar r_flashlightdepthres( "r_flashlightdepthres", "4096" );
 #endif
 #endif
 
@@ -1434,7 +1434,7 @@ bool CClientShadowMgr::Init()
 	mat_slopescaledepthbias_shadowmap = ConVarRef( "mat_slopescaledepthbias_shadowmap" );
 	mat_depthbias_shadowmap = ConVarRef( "mat_depthbias_shadowmap" );
 
-	mat_slopescaledepthbias_shadowmap.SetValue( "16" ); // Would do something like 2 here, but it causes citizens to look weird under flashlights
+	mat_slopescaledepthbias_shadowmap.SetValue( "4" ); // Would do something like 2 here, but it causes citizens to look weird under flashlights
 	mat_depthbias_shadowmap.SetValue( "0.00005" );
 #endif
 
