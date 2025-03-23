@@ -10,4 +10,32 @@ $Include "$SRCDIR\materialsystem\stdshaders\game_shader_dx9_base.vpc"
 
 $Project "Shaders (Episodic)"
 {
+	$Folder "Header Files"
+	{
+
+	}
+
+	$Folder "Shader Source"
+	{
+		$Folder "fxc"
+		{
+			//$File	""
+			//$File	""
+			$File	"HBAO_vs30.fxc"
+			$File	"HBAO_ps30.fxc"
+		}
+
+		$Folder "Headers"
+		{
+
+		}
+
+		$File	"mymod_dx9_30.txt"
+		$File	"mymod_dx9_20b.txt"
+	}
+
+	$Folder "Source Files"
+	{
+		$File	"HBAO_Shader.cpp"
+	}
 }

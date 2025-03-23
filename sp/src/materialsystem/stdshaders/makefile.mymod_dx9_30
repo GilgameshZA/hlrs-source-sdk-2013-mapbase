@@ -1,0 +1,10 @@
+default:  fxctmp9_tmp\hbao_vs30.inc shaders\fxc\hbao_vs30.vcs fxctmp9_tmp\hbao_ps30.inc shaders\fxc\hbao_ps30.vcs
+
+fxctmp9_tmp\hbao_vs30.inc shaders\fxc\hbao_vs30.vcs: hbao_vs30.fxc 
+	perl ..\..\devtools\bin\fxc_prep.pl   -source "..\.." hbao_vs30.fxc-----hbao_vs30
+	echo hbao_vs30.fxc>> filestocopy.txt
+
+fxctmp9_tmp\hbao_ps30.inc shaders\fxc\hbao_ps30.vcs: hbao_ps30.fxc 
+	perl ..\..\devtools\bin\fxc_prep.pl   -source "..\.." hbao_ps30.fxc-----hbao_ps30
+	echo hbao_ps30.fxc>> filestocopy.txt
+

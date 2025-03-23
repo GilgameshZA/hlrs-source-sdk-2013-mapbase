@@ -107,7 +107,7 @@ static ConVar r_shadow_mincastintensity( "r_shadow_mincastintensity", "0.3", FCV
 #endif
 static ConVar r_flashlight_version2( "r_flashlight_version2", "0", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY );
 
-ConVar r_flashlightdepthtexture( "r_flashlightdepthtexture", "1" );
+ConVar r_flashlightdepthtexture( "r_flashlightdepthtexture", "0" );
 
 #if defined( _X360 )
 ConVar r_flashlightdepthres( "r_flashlightdepthres", "512" );

@@ -1,0 +1,43 @@
+sampler2D depthSampler : register(s0);
+sampler2D normalSampler : register(s1);
+float2 resolution;
+float radius;
+float bias;
+float intensity;
+float aoMultiplier;
+
+float LinearizeDepth(float d)
+{
+    return 1.0 / (d + 0.0001);
+}
+
+float ComputeHBAO(float2 uv, float depth)
+{
+    float ao = 0.0;
+    const int numSamples = 8;
+    float angleStep = 3.14159 * 2.0 / numSamples;
+    
+    for (int i = 0; i < numSamples; i++)
+    {
+        float angle = i * angleStep;
+        float2 sampleOffset = float2(cos(angle), sin(angle)) * radius / resolution;
+        float2 sampleUV = uv + sampleOffset;
+        float sampleDepth = tex2D(depthSampler, sampleUV).r;
+        sampleDepth = LinearizeDepth(sampleDepth);
+        
+        float rangeCheck = smoothstep(0.0, 1.0, radius / abs(sampleDepth - depth));
+        ao += (sampleDepth >= depth + bias ? 1.0 : 0.0) * rangeCheck;
+    }
+    
+    ao = 1.0 - (ao / numSamples) * intensity;
+    return ao * aoMultiplier;
+}
+
+float4 main(float2 texcoord : TEXCOORD0) : COLOR
+{
+    float depth = tex2D(depthSampler, texcoord).r;
+    depth = LinearizeDepth(depth);
+    
+    float ao = ComputeHBAO(texcoord, depth);
+    return float4(ao, ao, ao, 1.0);
+}

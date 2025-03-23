@@ -1,0 +1,2 @@
+..\..\..\game\hl2\shaders\fxc\hbao_vs30.vcs
+..\..\..\game\hl2\shaders\fxc\hbao_ps30.vcs
